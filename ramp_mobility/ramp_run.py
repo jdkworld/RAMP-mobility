@@ -48,27 +48,28 @@ and naming further input files with corresponding country code
 
 charging = True         # True or False to select to activate the calculation of the charging profiles 
 write_variables = True  # Choose to write variables to csv
-full_year = False       # Choose if simulating the whole year (True) or not (False), if False, the console will ask how many days should be simulated.
+full_year = False     # Choose if simulating the whole year (True) or not (False), if False, the console will ask how many days should be simulated.
 
-countries = ['AT', 'BE', 'BG', 'CH', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU',
-    'IE', 'IT','LT', 'LU','LV', 'NL', 'NO', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'UK']
+countries = ['IND']
+#countries = ['AT', 'BE', 'BG', 'CH', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU','IE', 'IT','LT', 'LU','LV', 'NL', 'NO', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'UK']
 
 for c in countries:
     # Define folder where results are saved, it will be:
     # "results/inputfile/simulation_name" leave simulation_name False (or "")
     # to avoid the creation of the additional folder
     inputfile = f'Europe/{c}'
-    simulation_name = ''
+    simulation_name = 'results/'
     
     # Define country and year to be considered when generating profiles
     country = f'{c}'
-    year = 2016
+    year = 2011
     
     # Define attributes for the charging profiles
     charging_mode = 'Uncontrolled' # Select charging mode (Uncontrolled', 'Night Charge', 'RES Integration', 'Perfect Foresight')
-    logistic = False # Select the use of a logistic curve to model the probability of charging based on the SOC of the car
+    logistic = True # Select the use of a logistic curve to model the probability of charging based on the SOC of the car
     infr_prob = 0.8 # Probability of finding the infrastructure when parking ('piecewise', number between 0 and 1)
-    Ch_stations = ([3.7, 11, 120], [0.6, 0.3, 0.1]) # Define nominal power of charging stations and their probability 
+    #Ch_stations = ([22], [1])
+    Ch_stations = ([3.7, 22], [0.8, 0.2]) #  ([3.7, 11, 120], [0.6, 0.3, 0.1]) Define nominal power of charging stations and their probability
     
     #inputfile for the temperature data: 
     inputfile_temp = r"..\database\temp_ninja_pop_1980-2019.csv"
@@ -86,34 +87,46 @@ for c in countries:
     # Simulate the mobility profile 
     (Profiles_list, Usage_list, User_list, Profiles_user_list, dummy_days
      ) = Stochastic_Process_Mobility(inputfile, country, year, full_year)
-    
+
+
+
+
+
     # Post-processes the results and generates plots
     Profiles_avg, Profiles_list_kW, Profiles_series = pp.Profile_formatting(
         Profiles_list)
     Usage_avg, Usage_series = pp.Usage_formatting(Usage_list)
     Profiles_user = pp.Profiles_user_formatting(Profiles_user_list)
-    
+
+    print('pass-5')
+
     # If more than one daily profile is generated, also cloud plots are shown
-    if len(Profiles_list) > 1:
-        pp.Profile_cloud_plot(Profiles_list, Profiles_avg)
-    
+    #if len(Profiles_list) > 1:
+    #    pp.Profile_cloud_plot(Profiles_list, Profiles_avg)
+    print('pass-4')
     # Create a dataframe with the profile
     Profiles_df = pp.Profile_dataframe(Profiles_series, year) 
     Usage_df = pp.Usage_dataframe(Usage_series, year)
-    
+    print('pass-3')
     # Time zone correction for profiles and usage
     Profiles_utc = pp.Time_correction(Profiles_df, country, year) 
-    Usage_utc = pp.Time_correction(Usage_df, country, year)    
-    
+    Usage_utc = pp.Time_correction(Usage_df, country, year)
+    print('pass0')
     # By default, profiles and usage are plotted as a DataFrame
-    pp.Profile_df_plot(Profiles_df, start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country)
-    pp.Usage_df_plot(Usage_utc, start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country, User_list = User_list)
-    
+    #pp.Profile_df_plot(Profiles_df, start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country)
+    #pp.Usage_df_plot(Usage_utc, start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country, User_list = User_list)
+
+    print('pass1')
+    print(country)
     # Add temperature correction to the Power Profiles 
     # To be done after the UTC correction because the source data for Temperatures have time in UTC
     temp_profile = pp.temp_import(country, year, inputfile_temp) #Import temperature profiles, change the default path to the custom one
+    print('pass1.5')
+
     Profiles_temp = pp.Profile_temp(Profiles_utc, year = year, temp_profile = temp_profile)
-    
+
+    print('pass2')
+
     # Resampling the UTC Profiles
     Profiles_temp_h = pp.Resample(Profiles_temp)
     
@@ -147,3 +160,4 @@ for c in countries:
         pp.Charging_Profile_df_plot(Charging_profiles_utc, color = 'green', start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country)
                 
     print('\nExecution Time:', datetime.now() - startTime)
+    print('Done')
