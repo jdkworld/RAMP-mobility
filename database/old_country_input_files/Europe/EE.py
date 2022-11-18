@@ -5,14 +5,14 @@
 Input data definition 
 '''
 
-from ramp_mobility.core_model.core import User
+from src.core_model import User
 import numpy as np
 import pandas as pd
 import copy
 
 User_list = []
 
-'''Common values used in the input data definition'''
+'''Common values used in the input_output data definition'''
 
 #Define Country
 country = 'EE'

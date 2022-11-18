@@ -5,17 +5,17 @@
 Input data definition 
 '''
 
-from ramp_mobility.core_model.core import User
+from src.core_model import User
 import numpy as np
 import pandas as pd
 import copy
 
 User_list = []
 
-'''Common values used in the input data definition'''
+'''Common values used in the input_output data definition'''
 
 #Define Country
-country = 'PL'
+country = 'CH'
 
 #Total number of users to be simulated
 tot_users = 2500
@@ -190,7 +190,7 @@ perc_usage['saturday'] = {'working' :{'main': trips['saturday'].iloc[np.r_[wind_
                           'inactive':{'main': trips['saturday'].iloc[np.r_[wind_temp['inactive']['main'][0]:wind_temp['inactive']['main'][1]]].sum()}}
 perc_usage['sunday']   = {'working' :{'main': trips['saturday'].iloc[np.r_[wind_temp['working']['main'][0]:wind_temp['working']['main'][1], wind_temp['working']['main'][2]:wind_temp['working']['main'][3]]].sum()},
                           'student' :{'main': trips['saturday'].iloc[np.r_[wind_temp['student']['main'][0]:wind_temp['student']['main'][1], wind_temp['student']['main'][2]:wind_temp['student']['main'][3]]].sum()}, 
-                          'inactive':{'main': trips['saturday'].iloc[np.r_[wind_temp['inactive']['main'][0]:wind_temp['inactive']['main'][1]]].sum()}}
+                          'inactive':{'main': trips['saturday'].iloc[np.r_[wind_temp['inactive']['main'][0]:wind_temp['inactive']['main'][1]]].sum()}} #todo report saturday-sunday bug!!!
 
 #Calulate the Percentage of travels in functioning windows for free time
 #as complementary to the main time 
