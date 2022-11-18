@@ -1,0 +1,28 @@
+---
+
+
+year: 2011
+
+P_var: 0.1
+r_d: 0.3
+r_v: 0.3
+
+r_w:
+  working: 0.25
+  student: 0.25
+  inactive: 0.2
+  free time: 0.2
+
+Par_P_EV:
+  small:
+    - 0.26
+    - -13
+    - 546
+  medium:
+    - 0.3
+    - -14
+    - 600
+  large:
+    - 0.35
+    - -15.2
+    - 620

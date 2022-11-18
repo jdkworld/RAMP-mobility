@@ -1,0 +1,29 @@
+---
+
+country: CH
+tot_users: 20
+charging_mode: 'Uncontrolled'  # Select charging mode (Uncontrolled', 'Night Charge', 'RES Integration', 'Perfect Foresight')
+logistic: True
+infr_prob: 0.8
+
+
+charging_stations:
+  -
+    - 3.7 # capacity of the charging station
+    - 22
+  -
+    - 0.8 # probability of the charging station
+    - 0.2
+
+occasional_use:
+  weekday: 1
+  saturday: 0
+  sunday: 0
+  free time:
+    weekday: 0
+    weekend: 0
+
+battery_capacity: # battery capacity in kWh for each vehicle category
+  small: 37
+  medium: 60
+  large: 100
