@@ -27,9 +27,6 @@ battery_capacity: # battery capacity in kWh for each vehicle category
   medium: 60
   large: 100
 
-
-
-
 # logistic charge probability curve
 ch_k: 15
 ch_per_SOC: 0.5

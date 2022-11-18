@@ -12,7 +12,7 @@ class Inputs:
         self.continent = continent
         self.country = country
 
-        self.country_b = None
+        self.country_b = None  # used if there is no data for country
         self.tot_users = None
         self.charging_mode = None
         self.logistic = None
@@ -42,7 +42,7 @@ class Inputs:
         self.add_country_yaml()
         self.add_common_yaml()
 
-        self.country_c = None
+        self.country_c = None  # used if there is also no data for country_b, p.e. for JRC data
         self.trips = None
         self.pop_sh = None
         self.vehicle_sh = None
