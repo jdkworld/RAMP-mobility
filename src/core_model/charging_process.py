@@ -11,6 +11,7 @@ import random
 import pandas as pd
 import datetime as dt
 from src.utils import utils
+from src.core_model.input_class import Inputs
 
 
 # from initialise import (charge_prob, charge_prob_const, SOC_initial_f,
@@ -33,23 +34,23 @@ def Charging_Process(Profiles_user, User_list, country, year, dummy_days, residu
     #SOC value at the beginning of the simulation, relevant only for
     # Perfect Foresight charging strategy, as is the maximum SOC that the car 
     # will always try to go back to
-    SOC_min_rand = 0.5 # Minimum SOC level with which the car can start the simulation
+    SOC_min_rand = inputset.ch_SOC_min_rand # Minimum SOC level with which the car can start the simulation
 
     # Definition of battery limits to avoid degradation
-    SOC_max = 0.9 # Maximum SOC at which the battery is charged
-    SOC_min = 0.25 # Minimum SOC level that forces the charging event
+    SOC_max = inputset.ch_SOC_max # Maximum SOC at which the battery is charged
+    SOC_min = inputset.ch_SOC_min # Minimum SOC level that forces the charging event
 
-    eff = 0.90  # Charging/discharging efficiency
+    eff = inputset.ch_eff  # Charging/discharging efficiency
 
     P_ch_station_list = Ch_stations[0] # Nominal power of the charging station [kW]
     prob_ch_station = Ch_stations[1]
 
     # Parameters for the piecewise infrastructure probability function
     SOC_initial = 0.8
-    prob_max = 0.9
-    prob_min = 0.4
-    t1 = '08:00'
-    t2 = '18:00'
+    prob_max = inputset.ch_prob_max
+    prob_min = inputset.ch_prob_min
+    t1 = inputset.ch_t1
+    t2 = inputset.ch_t2
     
     # Calculate the number of users in simulation for screen update
     tot_users = utils.tot_users_calc(User_list)
@@ -221,7 +222,7 @@ def Charging_Process(Profiles_user, User_list, country, year, dummy_days, residu
                 # Control to check if the user can charge based on infrastructure 
                 # availability, SOC, time of the day (Depending on the options activated)
                 if (
-                    (ch_prob(SOC_park) > np.random.rand() and
+                    (ch_prob(SOC_park, inputset) > np.random.rand() and
                     infr_pr[park_ind[park][0]] > np.random.rand() and
                     charge_range_check(ind_park_range, charge_range)
                     ) or 

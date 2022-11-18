@@ -26,3 +26,6 @@ Par_P_EV:
     - 0.35
     - -15.2
     - 620
+
+ch_eff: 0.9         # Charging/discharging efficiency
+ch_SOC_min_rand: 0.5   # Minimum SOC level with which the car can start the simulation

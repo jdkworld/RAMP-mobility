@@ -20,7 +20,17 @@ class Inputs:
         self.charging_stations = None
         self.occasional_use = None
         self.battery_capacity = None
-        self.add_country_yaml()
+
+        self.ch_k = None
+        self.ch_per_SOC = None
+        self.ch_prob_max = None
+        self.ch_prob_min = None
+        self.ch_t1 = None
+        self.ch_t2 = None
+        self.ch_eff = None
+        self.ch_SOC_max = None
+        self.ch_SOC_min = None
+        self.ch_SOC_min_rand = None
 
         self.year = None
         self.p_var = None
@@ -28,6 +38,8 @@ class Inputs:
         self.r_v = None
         self.r_w = None
         self.par_p_ev = None
+
+        self.add_country_yaml()
         self.add_common_yaml()
 
         self.country_c = None
@@ -63,6 +75,15 @@ class Inputs:
         self.occasional_use = d['occasional_use']
         self.battery_capacity = d['battery_capacity']
 
+        self.ch_k = d['ch_k']
+        self.ch_per_SOC = d['ch_per_SOC']
+        self.ch_prob_max = d['ch_prob_max']
+        self.ch_prob_min = d['ch_prob_min']
+        self.ch_t1 = d['ch_t1']
+        self.ch_t2 = d['ch_t2']
+        self.ch_SOC_max = d['ch_SOC_max']
+        self.ch_SOC_min = d['ch_SOC_min']
+
     def add_common_yaml(self):
         inputfile = f'{Inputs.inputfolder}/common_input.yaml'
         d = parse_yaml(inputfile)
@@ -73,6 +94,8 @@ class Inputs:
         self.r_v = d['r_v']
         self.r_w = d['r_w']
         self.par_p_ev = d['Par_P_EV']
+        self.ch_eff = d['ch_eff']
+        self.ch_SOC_min_rand = d['ch_SOC_min_rand']
 
     def add_country_equivalents(self):
         # For the data coming from the JRC Survey, a dictionary is defined to assign each country to the neighbouring one

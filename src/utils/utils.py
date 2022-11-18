@@ -12,16 +12,16 @@ import pytz
 
 #%% Functions
  
-def charge_prob(SOC):
+def charge_prob(SOC, inputset):
     
-    k = 15
-    per_SOC = 0.5
+    k = inputset.ch_k
+    per_SOC = inputset.ch_per_SOC
     
     p = 1-1/(1+np.exp(-k*(SOC-per_SOC)))
        
     return p
 
-def charge_prob_const(SOC):        
+def charge_prob_const(SOC, inputset):
     
     p = 1       
     

@@ -4,8 +4,7 @@ country: CH
 tot_users: 20
 charging_mode: 'Uncontrolled'  # Select charging mode (Uncontrolled', 'Night Charge', 'RES Integration', 'Perfect Foresight')
 logistic: True
-infr_prob: 0.8
-
+infr_prob: 0.8 # set to 'piecewise' if you want to use the piecewise curve
 
 charging_stations:
   -
@@ -27,3 +26,20 @@ battery_capacity: # battery capacity in kWh for each vehicle category
   small: 37
   medium: 60
   large: 100
+
+
+
+
+# logistic charge probability curve
+ch_k: 15
+ch_per_SOC: 0.5
+
+#piecewise charging curve
+ch_prob_max: 0.9
+ch_prob_min: 0.4
+ch_t1: '06:00'
+ch_t2: '19:00'
+
+# other charging parameters
+ch_SOC_max: 0.9 # Maximum SOC at which the battery is charged
+ch_SOC_min: 0.25 # Minimum SOC level that forces the charging event
