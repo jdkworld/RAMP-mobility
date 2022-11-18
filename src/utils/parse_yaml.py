@@ -1,5 +1,5 @@
 from yaml import safe_load
-from config import ROOT
+from src.config import ROOT
 
 
 def parse_yaml(inputfile):
