@@ -9,9 +9,7 @@ import copy
 import matplotlib.ticker as mtick
 from pathlib import Path
 import pickle
-from src.utils import tot_users_calc, tot_battery_cap_calc
-from src.config import ROOT
-
+from src.utils.utils import tot_users_calc, tot_battery_cap_calc
 
 # from initialise import tot_users_calc, tot_battery_cap_calc
 import datetime as dt

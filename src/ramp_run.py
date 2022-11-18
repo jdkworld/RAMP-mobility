@@ -31,11 +31,10 @@ sys.path.append('../')
 from core_model.stochastic_process_mobility import Stochastic_Process_Mobility
 from core_model.charging_process import Charging_Process
 from post_process import post_process as pp
-import pandas as pd
 from datetime import datetime
 from src.config import ROOT
-from input_class import Inputs
-
+from src.core_model.input_class import Inputs
+from src.post_process.post_process_b import *
 
 
 continent = 'industry'
@@ -51,6 +50,8 @@ charging = True         # True or False to select to activate the calculation of
 write_variables = True  # Choose to write variables to csv
 full_year = False       # Choose if simulating the whole year (True) or not (False), if False, the console will ask how many days should be simulated.
 amount_days = 7         # amount of days to simulate
+make_hourly = True      # create additional output files aggregated on hourly basis
+make_plotly = True      # create html plots of the hourly results
 
 for country in countries:
     inputset = Inputs(country, continent)
@@ -128,9 +129,24 @@ for country in countries:
     
         # Export charging profiles in csv
         pp.export_csv('Charging Profiles', Charging_profiles_utc, output_folder)
-    
+
         # Plot the charging profile
         #pp.Charging_Profile_df_plot(Charging_profiles_utc, color = 'green', start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country)
-                
+
+        if make_hourly:
+            print('Aggregating to hourly...')
+            Profiles_temp_hourly = to_hourly(Profiles_temp, 'Mobility Profiles', output_folder)
+            Usage_utc_hourly = to_hourly(Usage_utc, 'Usage', output_folder)
+            Charging_profiles_utc_hourly = to_hourly(Charging_profiles_utc, 'Charging Profiles', output_folder)
+            if make_plotly:
+                print('making html plots...')
+                plot_folder = f'{ROOT}/input_output/{continent}/{country}/plots/'
+                #to_plotly_html(Profiles_temp_hourly, 'Mobility Profiles Hourly', plot_folder)
+                to_plotly_html(Profiles_temp, 'Mobility Profiles', plot_folder)
+                #to_plotly_html(Usage_utc_hourly, 'Usage Hourly', plot_folder)
+                to_plotly_html(Usage_utc, 'Usage', plot_folder)
+                to_plotly_html(Charging_profiles_utc_hourly, 'Charging Profiles Hourly', plot_folder)
+                to_plotly_html(Charging_profiles_utc, 'Charging Profiles', plot_folder)
+
     print('\nExecution Time:', datetime.now() - startTime)
     print('Done')

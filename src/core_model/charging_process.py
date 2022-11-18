@@ -10,8 +10,7 @@ import numpy as np
 import random 
 import pandas as pd
 import datetime as dt
-from src import utils
-from src.input_class import Inputs
+from src.utils import utils
 
 
 # from initialise import (charge_prob, charge_prob_const, SOC_initial_f,

@@ -6,7 +6,7 @@ import importlib
 import datetime
 import calendar
 import numpy as np
-from src.user_appliances import make_users_and_appliances
+from src.core_model.user_appliances import make_users_and_appliances
 
 # Import holidays package
 import holidays 

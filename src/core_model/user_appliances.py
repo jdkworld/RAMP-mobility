@@ -1,10 +1,4 @@
-import numpy as np
-import pandas as pd
-import copy
-import os
-from src.config import ROOT
 from src.core_model.core import User
-from input_class import Inputs
 
 
 def make_users_and_appliances(inputset):

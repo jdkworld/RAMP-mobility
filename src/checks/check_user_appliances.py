@@ -1,10 +1,9 @@
-from input.common_input import *
-from src.core_model import User
-from input_class import Inputs
-from user_appliances import make_users_and_appliances
+from src.core_model.core import User
+from src.core_model.input_class import Inputs
+from src.core_model.user_appliances import make_users_and_appliances
 
 
-# file to check the user_appliances.py
+# file to check if user_appliances.py was done correctly
 
 inputcountry = Inputs('IND', 'industry')
 tot_users = inputcountry.tot_users
@@ -17,6 +16,11 @@ d_min = inputcountry.d_min
 perc_usage = inputcountry.perc_usage
 occasional_use = inputcountry.occasional_use
 window = inputcountry.window
+Par_P_EV = inputcountry.par_p_ev
+r_v = inputcountry.r_v
+r_d = inputcountry.r_d
+r_w = inputcountry.r_w
+P_var = inputcountry.p_var
 
 
 User_list = []
@@ -659,7 +663,7 @@ def check_if_list_equal(list_1, list_2):
         return False
     return sorted(list_1) == sorted(list_2)
 
-user_dict, appliance_dict = make_users_and_appliances(inputcountry)
+user_list, appliance_dict = make_users_and_appliances(inputcountry)
 
 NWorking_EV_large_wd = appliance_dict['working']['large']['weekday']['main']
 NWorking_EV_large_wd_ft = appliance_dict['working']['large']['weekday']['free time']

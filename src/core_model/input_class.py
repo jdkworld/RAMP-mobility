@@ -1,5 +1,5 @@
-from parse_yaml import *
-from config import ROOT
+from src.utils.parse_yaml import parse_yaml
+from src.config import ROOT
 import pandas as pd
 import numpy as np
 import copy
