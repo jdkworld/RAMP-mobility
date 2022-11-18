@@ -10,6 +10,7 @@ import matplotlib.ticker as mtick
 from pathlib import Path
 import pickle
 from src.utils import tot_users_calc, tot_battery_cap_calc
+from src.config import ROOT
 
 
 # from initialise import tot_users_calc, tot_battery_cap_calc
@@ -384,16 +385,10 @@ for i in range (len(Profile)):
 
 # Export Profiles
 
-def export_csv(filename, variable, inputfile, simulation_name):
-    
-    if simulation_name:
-        simulation = f'/{simulation_name}/'
-    else:
-        simulation = '/'
-        
-    folder = f'../results/{inputfile}' + simulation 
-    Path(folder).mkdir(parents=True, exist_ok=True) 
-    variable.to_csv(f'{folder}{filename}.csv')
+def export_csv(filename, variable, output_folder):
+
+    Path(output_folder).mkdir(parents=True, exist_ok=True)
+    variable.to_csv(f'{output_folder}{filename}.csv')
     
 def export_pickle(filename, variable, inputfile, simulation_name):
     

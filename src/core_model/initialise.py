@@ -6,6 +6,7 @@ import importlib
 import datetime
 import calendar
 import numpy as np
+from src.user_appliances import make_users_and_appliances
 
 # Import holidays package
 import holidays 
@@ -105,10 +106,10 @@ def Initialise_model(dummy_days, full_year, year):
 
     return (Profile, Usage, Profile_user, Usage_user, num_profiles_user, num_profiles_sim)
     
-def Initialise_inputs(inputfile, country, year, full_year):
+def Initialise_inputs(inputset, country, year, full_year):
     
     Year_behaviour, dummy_days = yearly_pattern(country, year)
-    User_list = user_defined_inputs(inputfile)
+    User_list = make_users_and_appliances(inputset)
     (Profile, Usage, Profile_user, Usage_user, num_profiles_user,num_profiles_sim
      ) = Initialise_model(dummy_days, full_year, year) #initialise with empty values
     

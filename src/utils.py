@@ -53,7 +53,7 @@ def charge_check_normal(ind_park_range, charge_range):
 
 def pv_indexing(minutes, country, year, inputfile_pv = r"database\ninja_pv_europe_v1.1_merra2.csv"):
       
-    pv_af = pd.read_csv(inputfile_pv, index_col = 0) #Read the input file
+    pv_af = pd.read_csv(inputfile_pv, index_col = 0) #Read the input_output file
     pv_af = pd.DataFrame(pv_af[country]) #Filter only for needed country
     ind_init = pd.date_range(start=pv_af.index[0], end=pv_af.index[-1], freq='H', tz = 'UTC')
     pv_af.set_index(ind_init, inplace = True) #Set index to datetime

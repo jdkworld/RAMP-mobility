@@ -11,6 +11,7 @@ import random
 import pandas as pd
 import datetime as dt
 from src import utils
+from src.input_class import Inputs
 
 
 # from initialise import (charge_prob, charge_prob_const, SOC_initial_f,
@@ -19,24 +20,33 @@ from src import utils
 
 #%% Charging process calculation script
 
-def Charging_Process(Profiles_user, User_list, country, year, dummy_days, residual_load, charging_mode = 'Uncontrolled', logistic = False, infr_prob = 0.5, Ch_stations = ([3.7, 11, 120], [0.6, 0.3, 0.1])):
-    
+def Charging_Process(Profiles_user, User_list, country, year, dummy_days, residual_load, inputset):
+
+    Ch_stations = ([3.7, 11, 120], [0.6, 0.3, 0.1])
+    Ch_stations = inputset.charging_stations
+    infr_prob = 0.5
+    infr_prob = inputset.infr_prob
+    logistic = False
+    logistic = inputset.logistic
+    charging_mode = 'Uncontrolled'
+    charging_mode = inputset.charging_mode
+
     #SOC value at the beginning of the simulation, relevant only for
     # Perfect Foresight charging strategy, as is the maximum SOC that the car 
     # will always try to go back to
-    SOC_initial = 0.8
     SOC_min_rand = 0.5 # Minimum SOC level with which the car can start the simulation
 
     # Definition of battery limits to avoid degradation
     SOC_max = 0.9 # Maximum SOC at which the battery is charged
     SOC_min = 0.25 # Minimum SOC level that forces the charging event
-    
+
     eff = 0.90  # Charging/discharging efficiency
-    
+
     P_ch_station_list = Ch_stations[0] # Nominal power of the charging station [kW]
-    prob_ch_station = Ch_stations[1]    
-    
+    prob_ch_station = Ch_stations[1]
+
     # Parameters for the piecewise infrastructure probability function
+    SOC_initial = 0.8
     prob_max = 0.9
     prob_min = 0.4
     t1 = '08:00'

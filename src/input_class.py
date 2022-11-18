@@ -23,11 +23,11 @@ class Inputs:
         self.add_country_yaml()
 
         self.year = None
-        self.P_var = None
+        self.p_var = None
         self.r_d = None
         self.r_v = None
         self.r_w = None
-        self.Par_P_EV = None
+        self.par_p_ev = None
         self.add_common_yaml()
 
         self.country_c = None
@@ -68,11 +68,11 @@ class Inputs:
         d = parse_yaml(inputfile)
 
         self.year = d['year']
-        self.P_var = d['P_var']
+        self.p_var = d['P_var']
         self.r_d = d['r_d']
         self.r_v = d['r_v']
         self.r_w = d['r_w']
-        self.Par_P_EV = d['Par_P_EV']
+        self.par_p_ev = d['Par_P_EV']
 
     def add_country_equivalents(self):
         # For the data coming from the JRC Survey, a dictionary is defined to assign each country to the neighbouring one
