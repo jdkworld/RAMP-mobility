@@ -5,12 +5,9 @@
 import importlib
 import datetime
 import calendar
-import pytz
-import numpy as np 
+import numpy as np
 
-from ramp_mobility import country_input_files
-
-# Import holidays package 
+# Import holidays package
 import holidays 
 
 #%% Initialise model
@@ -77,7 +74,6 @@ def user_defined_inputs(inputfile):
     inputfile_module = inputfile.replace('/', '.')
     
     file_module = importlib.import_module(f'country_input_files.{inputfile_module}')
-    
 
     User_list = file_module.User_list
         
@@ -114,7 +110,7 @@ def Initialise_inputs(inputfile, country, year, full_year):
     Year_behaviour, dummy_days = yearly_pattern(country, year)
     User_list = user_defined_inputs(inputfile)
     (Profile, Usage, Profile_user, Usage_user, num_profiles_user,num_profiles_sim
-     ) = Initialise_model(dummy_days, full_year, year)
+     ) = Initialise_model(dummy_days, full_year, year) #initialise with empty values
     
     if calendar.isleap(year) and num_profiles_user == 365:
         print('[WARNING] A leap year is being simulated with 365 days, if you want to simulate the whole year please insert 366 as profiles number') 

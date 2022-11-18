@@ -5,9 +5,7 @@ import numpy as np
 import numpy.ma as ma
 import random 
 import math
-import pandas as pd
-import datetime
-from ramp_mobility.core_model.initialise import Initialise_model, Initialise_inputs 
+from src.core_model.initialise import Initialise_inputs
 
 #%% Core model stochastic script
 

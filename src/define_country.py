@@ -1,11 +1,5 @@
-import numpy as np
-import pandas as pd
-import copy
-import os
-from src.config import ROOT
 from input.common_input import *
-from parse_yaml import *
-from ramp_mobility.core_model.core import User
+from src.core_model import User
 from input_class import Inputs
 from user_appliances import make_users_and_appliances
 

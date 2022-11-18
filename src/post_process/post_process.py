@@ -9,7 +9,7 @@ import copy
 import matplotlib.ticker as mtick
 from pathlib import Path
 import pickle
-from ramp_mobility.utils import tot_users_calc, tot_battery_cap_calc
+from src.utils import tot_users_calc, tot_battery_cap_calc
 
 
 # from initialise import tot_users_calc, tot_battery_cap_calc
@@ -313,10 +313,6 @@ def Time_correction(df, country, year):
         country = 'GR'
     if country == 'UK':
         country = 'GB'
-    if country == 'IND':
-        country = 'CH'
-    if country == 'CUS':
-        country = 'CH'
         
     ind = df_c.index.tz_localize(pytz.country_timezones[country][0], nonexistent = 'NaT', ambiguous='NaT')
     

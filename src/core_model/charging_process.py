@@ -10,10 +10,10 @@ import numpy as np
 import random 
 import pandas as pd
 import datetime as dt
-from ramp_mobility import utils
-import math
+from src import utils
 
-# from initialise import (charge_prob, charge_prob_const, SOC_initial_f, 
+
+# from initialise import (charge_prob, charge_prob_const, SOC_initial_f,
 # SOC_initial_f_const, charge_check_smart, charge_check_normal, pv_indexing, 
 # tot_users_calc)
 
@@ -28,7 +28,7 @@ def Charging_Process(Profiles_user, User_list, country, year, dummy_days, residu
     SOC_min_rand = 0.5 # Minimum SOC level with which the car can start the simulation
 
     # Definition of battery limits to avoid degradation
-    SOC_max = 0.8 # Maximum SOC at which the battery is charged
+    SOC_max = 0.9 # Maximum SOC at which the battery is charged
     SOC_min = 0.25 # Minimum SOC level that forces the charging event
     
     eff = 0.90  # Charging/discharging efficiency
@@ -39,8 +39,8 @@ def Charging_Process(Profiles_user, User_list, country, year, dummy_days, residu
     # Parameters for the piecewise infrastructure probability function
     prob_max = 0.9
     prob_min = 0.4
-    t1 = '06:00'
-    t2 = '19:00'
+    t1 = '08:00'
+    t2 = '18:00'
     
     # Calculate the number of users in simulation for screen update
     tot_users = utils.tot_users_calc(User_list)
@@ -105,7 +105,7 @@ def Charging_Process(Profiles_user, User_list, country, year, dummy_days, residu
         charge_range = minutes.indexer_between_time('22:00', '7:00', include_start=True, include_end=False)
         charge_range_check = utils.charge_check_smart
     elif charging_mode == 'Self-consumption':
-        charge_range = utils.pv_indexing(minutes, country, year, inputfile_pv = r"database\ninja_pv_europe_v1.1_merra2.csv")
+        charge_range = utils.pv_indexing(minutes, country, year, inputfile_pv =r"database\ninja_pv_europe_v1.1_merra2.csv")
         charge_range_check = utils.charge_check_smart
     elif charging_mode == "RES Integration":
         charge_range = utils.residual_load(minutes, residual_load, year, country)

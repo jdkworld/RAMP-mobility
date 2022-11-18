@@ -24,13 +24,13 @@ under the License.
 
 #%% Import required modules
 
-import sys,os
-sys.path.append('../')
-import ramp_mobility
+import sys
 
-from core_model.stochastic_process_mobility import Stochastic_Process_Mobility
-from core_model.charging_process import Charging_Process
-from post_process import post_process as pp
+sys.path.append('../')
+
+from src.core_model import Stochastic_Process_Mobility
+from src.core_model import Charging_Process
+from src.post_process import post_process as pp
 
 import pandas as pd
 from datetime import datetime
@@ -58,7 +58,7 @@ for c in countries:
     # "results/inputfile/simulation_name" leave simulation_name False (or "")
     # to avoid the creation of the additional folder
     inputfile = f'Europe/{c}'
-    simulation_name = 'results/'
+    simulation_name = ''
     
     # Define country and year to be considered when generating profiles
     country = f'{c}'
@@ -88,55 +88,44 @@ for c in countries:
     (Profiles_list, Usage_list, User_list, Profiles_user_list, dummy_days
      ) = Stochastic_Process_Mobility(inputfile, country, year, full_year)
 
-
-
-
-
     # Post-processes the results and generates plots
     Profiles_avg, Profiles_list_kW, Profiles_series = pp.Profile_formatting(
         Profiles_list)
     Usage_avg, Usage_series = pp.Usage_formatting(Usage_list)
     Profiles_user = pp.Profiles_user_formatting(Profiles_user_list)
 
-    print('pass-5')
-
     # If more than one daily profile is generated, also cloud plots are shown
     #if len(Profiles_list) > 1:
     #    pp.Profile_cloud_plot(Profiles_list, Profiles_avg)
-    print('pass-4')
+
     # Create a dataframe with the profile
     Profiles_df = pp.Profile_dataframe(Profiles_series, year) 
     Usage_df = pp.Usage_dataframe(Usage_series, year)
-    print('pass-3')
+
     # Time zone correction for profiles and usage
     Profiles_utc = pp.Time_correction(Profiles_df, country, year) 
     Usage_utc = pp.Time_correction(Usage_df, country, year)
-    print('pass0')
+
     # By default, profiles and usage are plotted as a DataFrame
     #pp.Profile_df_plot(Profiles_df, start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country)
     #pp.Usage_df_plot(Usage_utc, start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country, User_list = User_list)
 
-    print('pass1')
-    print(country)
     # Add temperature correction to the Power Profiles 
     # To be done after the UTC correction because the source data for Temperatures have time in UTC
     temp_profile = pp.temp_import(country, year, inputfile_temp) #Import temperature profiles, change the default path to the custom one
-    print('pass1.5')
 
     Profiles_temp = pp.Profile_temp(Profiles_utc, year = year, temp_profile = temp_profile)
 
-    print('pass2')
-
     # Resampling the UTC Profiles
-    Profiles_temp_h = pp.Resample(Profiles_temp)
+    #Profiles_temp_h = pp.Resample(Profiles_temp)
     
     #Exporting all the main quantities
     if write_variables:
         pp.export_csv('Mobility Profiles', Profiles_temp, inputfile, simulation_name)
-        pp.export_csv('Mobility Profiles Hourly', Profiles_temp_h, inputfile, simulation_name)
+        #pp.export_csv('Mobility Profiles Hourly', Profiles_temp_h, inputfile, simulation_name)
         pp.export_csv('Usage', Usage_utc, inputfile, simulation_name)
     #   pp.export_pickle('Profiles_User', Profiles_user_temp, inputfile, simulation_name)
-        
+
     if charging:
         
         Profiles_user_temp = pp.Profile_temp_users(Profiles_user, temp_profile,
@@ -157,7 +146,7 @@ for c in countries:
         pp.export_csv('Charging Profiles', Charging_profiles_utc, inputfile, simulation_name)
     
         # Plot the charging profile
-        pp.Charging_Profile_df_plot(Charging_profiles_utc, color = 'green', start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country)
+        #pp.Charging_Profile_df_plot(Charging_profiles_utc, color = 'green', start = '01-01 00:00:00', end = '12-31 23:59:00', year = year, country = country)
                 
     print('\nExecution Time:', datetime.now() - startTime)
     print('Done')
