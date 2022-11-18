@@ -124,7 +124,7 @@ for country in countries:
                 
         # Postprocess of charging profiles 
         Charging_profiles_utc = pp.Time_correction(Charging_profile_df, 
-                                                   country, year) 
+                                                   inputset.country_b, year)
     
         # Export charging profiles in csv
         pp.export_csv('Charging Profiles', Charging_profiles_utc, output_folder)
