@@ -6,7 +6,7 @@ import copy
 
 
 class Inputs:
-    inputfolder = f'{ROOT}/input/'
+    inputfolder = f'{ROOT}/input_output/'
 
     def __init__(self, country, continent):
         self.continent = continent
@@ -52,7 +52,7 @@ class Inputs:
         self.add_perc_usage()
 
     def add_country_yaml(self):
-        inputfile = f'{ROOT}/input/{self.continent}/{self.country}.yaml'
+        inputfile = f'{Inputs.inputfolder}/{self.continent}/{self.country}/specific_input.yaml'
         d = parse_yaml(inputfile)
         self.country_b = d['country']
         self.tot_users = d['tot_users']
@@ -64,7 +64,7 @@ class Inputs:
         self.battery_capacity = d['battery_capacity']
 
     def add_common_yaml(self):
-        inputfile = f'{ROOT}/input/common_input.yaml'
+        inputfile = f'{Inputs.inputfolder}/common_input.yaml'
         d = parse_yaml(inputfile)
 
         self.year = d['year']
