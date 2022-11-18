@@ -49,8 +49,8 @@ startTime = datetime.now()
 #%% Inputs definition
 charging = True         # True or False to select to activate the calculation of the charging profiles 
 write_variables = True  # Choose to write variables to csv
-full_year = False     # Choose if simulating the whole year (True) or not (False), if False, the console will ask how many days should be simulated.
-amount_days = 7 # amount of days to simulate
+full_year = False       # Choose if simulating the whole year (True) or not (False), if False, the console will ask how many days should be simulated.
+amount_days = 7         # amount of days to simulate
 
 for country in countries:
     inputset = Inputs(country, continent)
@@ -67,7 +67,7 @@ for country in countries:
     
     # Simulate the mobility profile 
     (Profiles_list, Usage_list, User_list, Profiles_user_list, dummy_days
-     ) = Stochastic_Process_Mobility(inputset, country, year, full_year)
+     ) = Stochastic_Process_Mobility(inputset, country, year, full_year, amount_days)
 
     # Post-processes the output and generates plots
     Profiles_avg, Profiles_list_kW, Profiles_series = pp.Profile_formatting(

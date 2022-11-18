@@ -80,7 +80,7 @@ def user_defined_inputs(inputfile):
         
     return(User_list)
 
-def Initialise_model(dummy_days, full_year, year):
+def Initialise_model(dummy_days, full_year, year, amount_days):
     '''
     The model is ready to be initialised
     '''
@@ -91,7 +91,7 @@ def Initialise_model(dummy_days, full_year, year):
         else:
             num_profiles_user = 365  # normal full year
     else:
-        num_profiles_user = int(input("Please indicate the number of profiles (days) to be generated: ")) #asks the user how many profiles (i.e. code runs) he wants
+        num_profiles_user = amount_days
 
     num_profiles_sim = num_profiles_user + (2 * dummy_days)
     
@@ -106,12 +106,12 @@ def Initialise_model(dummy_days, full_year, year):
 
     return (Profile, Usage, Profile_user, Usage_user, num_profiles_user, num_profiles_sim)
     
-def Initialise_inputs(inputset, country, year, full_year):
+def Initialise_inputs(inputset, country, year, full_year, amount_days):
     
     Year_behaviour, dummy_days = yearly_pattern(country, year)
     User_list = make_users_and_appliances(inputset)
     (Profile, Usage, Profile_user, Usage_user, num_profiles_user,num_profiles_sim
-     ) = Initialise_model(dummy_days, full_year, year) #initialise with empty values
+     ) = Initialise_model(dummy_days, full_year, year, amount_days) #initialise with empty values
     
     if calendar.isleap(year) and num_profiles_user == 365:
         print('[WARNING] A leap year is being simulated with 365 days, if you want to simulate the whole year please insert 366 as profiles number') 

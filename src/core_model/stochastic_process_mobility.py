@@ -9,11 +9,11 @@ from src.core_model.initialise import Initialise_inputs
 
 #%% Core model stochastic script
 
-def Stochastic_Process_Mobility(inputset, country, year, full_year):
+def Stochastic_Process_Mobility(inputset, country, year, full_year, amount_days):
     
     (peak_enlarg, mu_peak, s_peak, Year_behaviour, User_list, 
      Profile, Usage, Profile_user, Usage_user, num_profiles_user, 
-     num_profiles_sim, dummy_days) = Initialise_inputs(inputset, country, year, full_year)
+     num_profiles_sim, dummy_days) = Initialise_inputs(inputset, country, year, full_year, amount_days)
     
     '''
     Calculation of the peak time range, which is used to discriminate between off-peak and on-peak coincident switch-on probability
