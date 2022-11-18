@@ -5,7 +5,7 @@ from pathlib import Path
 
 def to_hourly(df, name, output_folder):
     hourly_df = df.resample("H").mean()
-    df.to_csv(f'{output_folder}{name} Hourly.csv')
+    hourly_df.to_csv(f'{output_folder}{name} Hourly.csv')
     return hourly_df
 
 def to_plotly_html(df, name, output_folder):
